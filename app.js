@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const sequelize = require('./config/database');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -38,5 +38,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 console.log("connected")
-
+sequelize.authenticate()
+  .then(() => console.log('Database connected'))
+  .catch(err => console.error('Database connection error:', err));
 module.exports = app;
